@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Spectral:wght@300&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
     </style>
   </head>
   <body>
@@ -23,16 +24,31 @@
 
         <div class="links">
           <ul>
-            <li><a href="">login</a></li>
-            <li><a href="">about us</a></li>
-            <li><a href="" class="addbook" id="">add book</a></li>
+            <li><a href="#">login</a></li>
+            <li><a href="#">about us</a></li>
+            <li><a href="#" class="addbook" id="addbtn">add book</a></li>
           </ul>
         </div>
       </div>
     </div>
     <!-- End of Header -->
     <div class="container">
-      <div class="content"></div>
+      <div class="content" id="bookContainer"></div>
+    </div>
+
+    <div class="popup" id="popup-form">
+      <form action="">
+        <a class="exit" id="exitbtn">+</a>
+        <h1>Add Book</h1>
+        <input type="text" class="title" id="myTitle" placeholder="Title" />
+        <input type="text" class="author" id="myAuthor" placeholder="Author" />
+        <input type="number" class="pages" id="myPages" placeholder="Pages" />
+        <div>
+          <p>Have you read the book?</p>
+          <input type="checkbox" class="read" id="myRead" />
+        </div>
+        <button class="submit" id="submitbtn">Submit</button>
+      </form>
     </div>
   </body>
 </html>
