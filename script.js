@@ -6,6 +6,30 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+Book.prototype.deleteBook = (i) => {
+  const btn = document.getElementById(i);
+  btn.addEventListener("click", () => {
+    myLibrary.splice(i, 1);
+    console.table(myLibrary);
+    createDisplay();
+  });
+};
+
+Book.prototype.toggleRead = (i) => {
+  const readbtn = document.getElementById(`read${i}`);
+  readbtn.addEventListener("click", () => {
+    if (readbtn.innerText === "Not Read") {
+      readbtn.innerText = "Read";
+      readbtn.classList.add("active");
+      myLibrary[i].read = true;
+    } else {
+      readbtn.innerText = "Not Read";
+      readbtn.classList.remove("active");
+      myLibrary[i].read = false;
+    }
+  });
+};
+
 //Library array
 let myLibrary = [];
 
@@ -36,11 +60,10 @@ submit.onclick = () => {
   createObject(title, author, pages, read);
   console.table(myLibrary);
   createDisplay();
-
   console.table(myLibrary);
-  console.log("Ran to this point");
 };
 
+//Creates display
 function createDisplay() {
   document.querySelector("#bookContainer").innerHTML = " ";
   for (let i = 0; i < myLibrary.length; i++) {
@@ -53,20 +76,43 @@ function createDisplay() {
     display.appendChild(addTitle);
 
     const addAuthor = document.createElement("h2");
-    const authorNode = document.createTextNode(`${myLibrary[i].author}`);
+    const authorNode = document.createTextNode(`by ${myLibrary[i].author}`);
     addAuthor.appendChild(authorNode);
     display.appendChild(addAuthor);
 
     const addPages = document.createElement("h2");
-    const pagesNode = document.createTextNode(`${myLibrary[i].pages}`);
+    const pagesNode = document.createTextNode(`${myLibrary[i].pages} pages`);
     addPages.appendChild(pagesNode);
     display.appendChild(addPages);
-
-    const addRead = document.createElement("h2");
-    const readNode = document.createTextNode(`${myLibrary[i].read}`);
-    addRead.appendChild(readNode);
+    let readResult;
+    const addRead = document.createElement("button");
+    addRead.classList.add("readbtn");
+    if (myLibrary[i].read === true) {
+      readResult = "Read";
+      addRead.classList.add("active");
+    } else {
+      readResult = "Not Read";
+    }
+    addRead.setAttribute("id", `read${i}`);
+    addRead.innerText = readResult;
     display.appendChild(addRead);
-    document.getElementById("bookContainer");
+    const addDelete = document.createElement("button");
+    addDelete.innerText = "Delete";
+    addDelete.classList.add("deletebtn");
+    addDelete.setAttribute("id", `${i}`);
+
+    display.appendChild(addDelete);
     document.getElementById("bookContainer").appendChild(display);
+    myLibrary[i].deleteBook(i);
+    myLibrary[i].toggleRead(i);
+    clearInput();
+    document.querySelector(".popup").style.display = "none";
   }
+}
+
+function clearInput() {
+  document.getElementById("myTitle").value = "";
+  document.getElementById("myAuthor").value = "";
+  document.getElementById("myPages").value = "";
+  document.getElementById("myRead").checked = false;
 }
