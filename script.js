@@ -1,34 +1,36 @@
 //Book constructor
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  deleteBook(i) {
+    const btn = document.getElementById(i);
+    btn.addEventListener("click", () => {
+      myLibrary.splice(i, 1);
+      console.table(myLibrary);
+      createDisplay();
+    });
+  }
+
+  toggleRead(i) {
+    const readbtn = document.getElementById(`read${i}`);
+    readbtn.addEventListener("click", () => {
+      if (readbtn.innerText === "Not Read") {
+        readbtn.innerText = "Read";
+        readbtn.classList.add("active");
+        myLibrary[i].read = true;
+      } else {
+        readbtn.innerText = "Not Read";
+        readbtn.classList.remove("active");
+        myLibrary[i].read = false;
+      }
+    });
+  }
 }
-
-Book.prototype.deleteBook = (i) => {
-  const btn = document.getElementById(i);
-  btn.addEventListener("click", () => {
-    myLibrary.splice(i, 1);
-    console.table(myLibrary);
-    createDisplay();
-  });
-};
-
-Book.prototype.toggleRead = (i) => {
-  const readbtn = document.getElementById(`read${i}`);
-  readbtn.addEventListener("click", () => {
-    if (readbtn.innerText === "Not Read") {
-      readbtn.innerText = "Read";
-      readbtn.classList.add("active");
-      myLibrary[i].read = true;
-    } else {
-      readbtn.innerText = "Not Read";
-      readbtn.classList.remove("active");
-      myLibrary[i].read = false;
-    }
-  });
-};
 
 //Library array
 let myLibrary = [];
